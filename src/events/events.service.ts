@@ -6,10 +6,11 @@ import { EventoDTO } from './event.dto';
 export class EventsService {
     constructor(private prisma : PrismaService){}
 
-    async create ({ nome }: EventoDTO) {
+    async create ({ nome, tipoEventoId }: EventoDTO) {
         const event = await this.prisma.event.create({
             data: {
                 nome,
+                tipoEventoId
             },
         });
 
