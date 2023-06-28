@@ -21,5 +21,25 @@ export class TipoEventoService {
         return tipos;
     }
 
+    async delete(id: number) {
+        
+        const eventosAssociados = await this.prisma.event.count({
+            where: {
+                tipoEventoId: id,
+            },
+        });
+
+        if (eventosAssociados > 0) {
+            throw new Error(
+                'Não é possível excluir o tipo de evento porque existem eventos associados a ele.'
+            );
+        }
+
+        await this.prisma.tipoEvento.delete({
+            where: {
+                id,
+            },
+        });
+    }
 
 }
