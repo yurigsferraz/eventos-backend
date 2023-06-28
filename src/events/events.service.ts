@@ -10,7 +10,7 @@ export class EventsService {
         const event = await this.prisma.event.create({
             data: {
                 nome,
-                tipoEventoId
+                tipoEventoId,
             },
         });
 
@@ -18,7 +18,11 @@ export class EventsService {
     }
 
     async findAll() {
-        const events = await this.prisma.event.findMany();
+        const events = await this.prisma.event.findMany({
+            include: {
+                tipoEvento: true,
+              },
+        });
 
         return events;
     }
